@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Football Player AI — Egyptian Premier League (Copy)</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Football Player AI — Egyptian Premier League</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -79,7 +79,7 @@ function explorer(){const teams=[...new Set(P.map(p=>p.t))].sort();
  const draw=()=>{const q=S.q.toLowerCase();const rows=P.filter(p=>p.m>=S.min&&(!S.role||p.r==S.role)&&(!S.team||p.t==S.team)&&(!q||(p.n+' '+p.t).toLowerCase().includes(q)))
   .sort((a,b)=>{const A=S.sort=='n'?a.n:S.sort=='t'?a.t:a[S.sort],B=S.sort=='n'?b.n:S.sort=='t'?b.t:b[S.sort];return(A>B?1:A<B?-1:0)*S.dir});
   $('#tb').innerHTML=`<table><tr>${[['n','player'],['t','team'],['r','role'],['m','min'],['imp','imp']].map(([k,l])=>`<th data-k="${k}">${t(l)}${S.sort==k?(S.dir>0?' ▲':' ▼'):''}</th>`).join('')}<th>${t('conf')}</th></tr>
-  ${rows.slice(0,120).map(p=>`<tr class="row" onclick="location.hash='#/p/${p.id}'"><td><b>${p.n}</b></td><td>${p.t}</td><td>${badge(p.r)}</td><td>${p.m}</td><td><div style="display:flex;gap:8px;align-items:center"><b style="width:26px">${p.imp}</b><div class="bar"><i style="width:${p.imp}%"></i></div></div></td><td>${cbadge(p.m)}</td></tr>`).join('')}</table>`;
+  ${rows.map(p=>`<tr class="row" onclick="location.hash='#/p/${p.id}'"><td><b>${p.n}</b></td><td>${p.t}</td><td>${badge(p.r)}</td><td>${p.m}</td><td><div style="display:flex;gap:8px;align-items:center"><b style="width:26px">${p.imp}</b><div class="bar"><i style="width:${p.imp}%"></i></div></div></td><td>${cbadge(p.m)}</td></tr>`).join('')}</table>`;
   document.querySelectorAll('th[data-k]').forEach(h=>h.onclick=()=>{const k=h.dataset.k;S.dir=S.sort==k?-S.dir:-1;S.sort=k;draw()})};
  $('#q').oninput=e=>{S.q=e.target.value;draw()};$('#fr').onchange=e=>{S.role=e.target.value;draw()};$('#ft').onchange=e=>{S.team=e.target.value;draw()};$('#fm').onchange=e=>{S.min=+e.target.value;draw()};draw()}
 function player(id){const p=byId[id];if(!p)return explorer();const ks=RK[p.r],g=G[p.r];const sk=SK.filter(k=>!/dribbles/.test(k)||true).map(k=>[k,p.pc[k]]).sort((a,b)=>b[1]-a[1]);
